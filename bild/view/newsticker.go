@@ -36,6 +36,7 @@ func (h HtmlTemplate) ExecuteHtmlTemplate() (string, error) {
 const htmlTemplate = `<html>
 <head>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<style>
 		h1 {
 			text-align: center;
@@ -55,7 +56,7 @@ const htmlTemplate = `<html>
 
 	{{ range $i, $val := .News }}
 	<div class="news-item">
-		<h3><a href="{{ $val.Link }}">{{ $val.Title }}</a></h3>
+		<h3><a href="{{ $val.Link }}" target="_blank">{{ $val.Title }}</a></h3>
 		<div class="info">
 			<span class="date">{{ $val.Date }}</span>
 			<span class="category">{{ $val.Category }}</span>
