@@ -13,10 +13,12 @@ func main() {
 	log.SetLevel(log.DebugLevel)
 
 	bildApi := api.NewBildNewsTicker()
-	h := handler.NewNewsTickerHandler(bildApi)
+	newsTickerHandler := handler.NewNewsTickerHandler(bildApi)
+	coronaNewsHandler := handler.NewCoronaNewsHandler(bildApi)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/news/bild", h.Get)
+	r.HandleFunc("/bild/news", newsTickerHandler.Get)
+	r.HandleFunc("/bild/corona", coronaNewsHandler.Get)
 
 	log.Info("Starting service")
 	http.ListenAndServe(":8080", r)

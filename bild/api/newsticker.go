@@ -10,35 +10,28 @@ import (
 )
 
 const (
-	baseUrl       = "https://m.bild.de"
-	newsTickerUrl = "https://m.bild.de/news/alle-news-home-home/nachricht/alle-meldungen-49391716.bildMobile.html"
+	baseUrl         = "https://m.bild.de"
+	newsTickerUrl   = "https://m.bild.de/news/alle-news-home-home/nachricht/alle-meldungen-49391716.bildMobile.html"
+	coronaTickerUrl = "https://www.bild.de/news/inland/news-inland/coronavirus-live-ticker-70411946.bild.html"
 )
 
 type BildNewsTicker struct {
-	httpClient    *http.Client
-	newsTickerUrl string
+	httpClient      *http.Client
+	newsTickerUrl   string
+	coronaTickerUrl string
 }
 
 func NewBildNewsTicker() *BildNewsTicker {
 	return &BildNewsTicker{
-		httpClient:    &http.Client{},
-		newsTickerUrl: newsTickerUrl,
+		httpClient:      &http.Client{},
+		newsTickerUrl:   newsTickerUrl,
+		coronaTickerUrl: coronaTickerUrl,
 	}
 }
 
 func (b *BildNewsTicker) GetNews() ([]model.NewsTickerItem, error) {
-	// Request the HTML page.
-	res, err := b.httpClient.Get(b.newsTickerUrl)
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		return nil, fmt.Errorf("status code error: %d %s", res.StatusCode, res.Status)
-	}
-
 	// Load the HTML document
-	doc, err := goquery.NewDocumentFromReader(res.Body)
+	doc, err := b.getDocument(b.newsTickerUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -68,4 +61,50 @@ func (b *BildNewsTicker) GetNews() ([]model.NewsTickerItem, error) {
 	})
 
 	return newsItems, nil
+}
+
+func (b *BildNewsTicker) GetCoronaNews() ([]model.NewsTickerItem, error) {
+	// Load the HTML document
+	doc, err := b.getDocument(b.coronaTickerUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	newsItems := make([]model.NewsTickerItem, 0)
+
+	// Find the latest news
+	doc.Find(".stream-list .stream-item:not(.stream-datetime) .stream-body").Each(func(i int, s *goquery.Selection) {
+		newsItem := model.NewsTickerItem{}
+
+		timeNode := s.Find("time").First()
+		newsItem.Date = timeNode.AttrOr("datetime", "") + " " + timeNode.Text()
+
+		newsItem.Title = s.Find(".entry-title .headline").Text()
+
+		newsItem.Description = s.Find("p").Text()
+
+		newsItems = append(newsItems, newsItem)
+	})
+
+	return newsItems, nil
+}
+
+func (b *BildNewsTicker) getDocument(url string) (*goquery.Document, error) {
+	// Request the HTML page.
+	res, err := b.httpClient.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		return nil, fmt.Errorf("status code error: %d %s", res.StatusCode, res.Status)
+	}
+
+	// Load the HTML document
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return doc, nil
 }
