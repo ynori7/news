@@ -19,6 +19,8 @@ const CoronaNewsTemplate = `<html>
 			margin-bottom: 2rem;
 		}
 	</style>
+	<title>Bild Corona-Ticker</title>
+	<meta name="description" content="Bild Corona News-Ticker ohne Fett" property="og:description">
 </head>
 <body>
 <section class="news">

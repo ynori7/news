@@ -4,6 +4,8 @@ const IndexTemplate = `<html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Bild News</title>
+	<meta name="description" content="Bild News ohne Fett" property="og:description">
 </head>
 <body>
 <section class="news">

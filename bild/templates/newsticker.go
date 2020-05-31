@@ -19,6 +19,8 @@ const NewsTickerTemplate = `<html>
 			margin-bottom: 2rem;
 		}
 	</style>
+	<title>Bild News-Ticker</title>
+	<meta name="description" content="Bild News-Ticker ohne Fett" property="og:description">
 </head>
 <body>
 <section class="news">
