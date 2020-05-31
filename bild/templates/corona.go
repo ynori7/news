@@ -7,7 +7,7 @@ const CoronaNewsTemplate = `<html>
 	<style>
 		h1 {
 			text-align: center;
-			margin-bottom: 5rem;
+			margin-bottom: 3rem;
 		}
 		.info {
 			font-size: .875rem;
@@ -15,11 +15,16 @@ const CoronaNewsTemplate = `<html>
     		color: #787878;
     		text-transform: uppercase;
 		}
+		.back {
+			margin-bottom: 2rem;
+		}
 	</style>
 </head>
 <body>
 <section class="news">
 	<h1>Corona Nachrichten</h1>
+
+	<div class="back"><a href="/bild">Züruck</a></div>
 
 	{{ range $i, $val := .News }}
 	<div class="news-item">

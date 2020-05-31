@@ -18,6 +18,10 @@ func main() {
 	handler.NewNewsTickerHandler(bildApi).AddRoutes(r)
 	handler.NewCoronaNewsHandler(bildApi).AddRoutes(r)
 
+	bildIndexHandler := handler.NewIndexHandler()
+	bildIndexHandler.AddRoutes(r)
+	r.HandleFunc("/bild", bildIndexHandler.Get)
+
 	log.Info("Starting service")
 	http.ListenAndServe(":8080", r)
 }
