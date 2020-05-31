@@ -20,7 +20,7 @@ func main() {
 
 	bildIndexHandler := handler.NewIndexHandler()
 	bildIndexHandler.AddRoutes(r)
-	r.HandleFunc("/bild", bildIndexHandler.Get)
+	r.HandleFunc("/", bildIndexHandler.Get)
 
 	log.Info("Starting service")
 	http.ListenAndServe(":8080", r)
