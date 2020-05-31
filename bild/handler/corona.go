@@ -3,10 +3,12 @@ package handler
 import (
 	"net/http"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 	"github.com/ynori7/news/bild/api"
-	"github.com/ynori7/news/bild/view"
-	"github.com/ynori7/news/bild/view/templates"
+	"github.com/ynori7/news/bild/templates"
+	"github.com/ynori7/news/core/log"
+	"github.com/ynori7/news/core/view"
 )
 
 type CoronaNewsHandler struct {
@@ -19,14 +21,18 @@ func NewCoronaNewsHandler(a *api.BildNewsTicker) *CoronaNewsHandler {
 	}
 }
 
+func (h *CoronaNewsHandler) AddRoutes(r *mux.Router) {
+	r.HandleFunc("/bild/corona", h.Get)
+}
+
 // Get fetches the HTML markup for the Bild Newsticker
 func (h *CoronaNewsHandler) Get(w http.ResponseWriter, r *http.Request) {
-	logger := log.WithFields(log.Fields{"Logger": "CoronaNewsHandler.Get"})
+	logger := log.WithRequest("CoronaNewsHandler.Get", r)
 	logger.Info("Handling request")
 
 	news, err := h.api.GetCoronaNews()
 	if err != nil {
-		logger.WithFields(log.Fields{"error": err}).Error("Error getting news")
+		logger.WithFields(logrus.Fields{"error": err}).Error("Error getting news")
 		w.WriteHeader(500)
 		w.Write([]byte(ErrInternalError.Error()))
 		return
@@ -35,7 +41,7 @@ func (h *CoronaNewsHandler) Get(w http.ResponseWriter, r *http.Request) {
 	template := view.NewHtmlTemplate(news)
 	markup, err := template.ExecuteHtmlTemplate(templates.CoronaNewsTemplate)
 	if err != nil {
-		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
+		logger.WithFields(logrus.Fields{"error": err}).Error("Error rendering view")
 		w.WriteHeader(500)
 		w.Write([]byte(ErrInternalError.Error()))
 		return

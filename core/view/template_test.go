@@ -1,10 +1,12 @@
-package view
+package view_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
 	"github.com/ynori7/news/bild/model"
+	"github.com/ynori7/news/bild/templates"
+	"github.com/ynori7/news/core/view"
 )
 
 func Test_ExecuteHtmlTemplate(t *testing.T) {
@@ -19,8 +21,8 @@ func Test_ExecuteHtmlTemplate(t *testing.T) {
 	}
 
 	// when
-	template := NewHtmlTemplate(news)
-	_, err := template.ExecuteHtmlTemplate()
+	template := view.NewHtmlTemplate(news)
+	_, err := template.ExecuteHtmlTemplate(templates.NewsTickerTemplate)
 
 	// then
 	require.NoError(t, err)

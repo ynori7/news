@@ -7,18 +7,16 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/ynori7/news/bild/api"
 	"github.com/ynori7/news/bild/handler"
+	_ "github.com/ynori7/news/core/log"
 )
 
 func main() {
-	log.SetLevel(log.DebugLevel)
-
-	bildApi := api.NewBildNewsTicker()
-	newsTickerHandler := handler.NewNewsTickerHandler(bildApi)
-	coronaNewsHandler := handler.NewCoronaNewsHandler(bildApi)
-
 	r := mux.NewRouter()
-	r.HandleFunc("/bild/news", newsTickerHandler.Get)
-	r.HandleFunc("/bild/corona", coronaNewsHandler.Get)
+
+	// Bild
+	bildApi := api.NewBildNewsTicker()
+	handler.NewNewsTickerHandler(bildApi).AddRoutes(r)
+	handler.NewCoronaNewsHandler(bildApi).AddRoutes(r)
 
 	log.Info("Starting service")
 	http.ListenAndServe(":8080", r)
