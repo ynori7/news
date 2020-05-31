@@ -21,8 +21,9 @@ func Test_ExecuteHtmlTemplate(t *testing.T) {
 	}
 
 	// when
-	template := view.NewHtmlTemplate(news)
-	_, err := template.ExecuteHtmlTemplate(templates.NewsTickerTemplate)
+	_, err := view.ExecuteHtmlTemplate(templates.NewsTickerTemplate, struct {
+		News []model.NewsTickerItem
+	}{News: news})
 
 	// then
 	require.NoError(t, err)

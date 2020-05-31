@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/ynori7/news/bild/model"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -33,16 +34,17 @@ func (h *CoronaNewsHandler) Get(w http.ResponseWriter, r *http.Request) {
 	news, err := h.api.GetCoronaNews()
 	if err != nil {
 		logger.WithFields(logrus.Fields{"error": err}).Error("Error getting news")
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(ErrInternalError.Error()))
 		return
 	}
 
-	template := view.NewHtmlTemplate(news)
-	markup, err := template.ExecuteHtmlTemplate(templates.CoronaNewsTemplate)
+	markup, err := view.ExecuteHtmlTemplate(templates.CoronaNewsTemplate, struct {
+		News []model.NewsTickerItem
+	}{News: news})
 	if err != nil {
 		logger.WithFields(logrus.Fields{"error": err}).Error("Error rendering view")
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(ErrInternalError.Error()))
 		return
 	}
