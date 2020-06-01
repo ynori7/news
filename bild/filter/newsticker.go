@@ -19,12 +19,17 @@ var (
 		"MECKLENBURG-VORPOMMERN": {},
 		"BERLIN":                 {},
 		"LEIPZIG":                {},
+		"THÜRINGEN":              {},
+		"FRANKFURT":              {},
+		"NÜRNBERG":               {},
 
 		//Other
-		"TV":    {},
-		"STARS": {},
-		"QUEER": {},
-		"MUSIK": {},
+		"TV":     {},
+		"STARS":  {},
+		"QUEER":  {},
+		"MUSIK":  {},
+		"TENNIS": {},
+		"KINO":   {},
 	}
 
 	categoryBlackList_FuzzyMatches = []string{
