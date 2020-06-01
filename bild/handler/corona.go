@@ -21,11 +21,9 @@ func NewCoronaNewsHandler(a *api.BildNewsTicker) *CoronaNewsHandler {
 		api: a,
 	}
 
-	routing.RegisterRoutes([]routing.Route{
-		{
-			Path:    "/bild/corona",
-			Handler: h.Get,
-		},
+	routing.RegisterRoutes(routing.Route{
+		Path:    "/bild/corona",
+		Handler: h.Get,
 	})
 
 	return h

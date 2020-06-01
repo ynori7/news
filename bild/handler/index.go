@@ -18,11 +18,9 @@ type IndexHandler struct {
 func NewIndexHandler() *IndexHandler {
 	h := &IndexHandler{}
 
-	routing.RegisterRoutes([]routing.Route{
-		{
-			Path:    "/bild",
-			Handler: h.Get,
-		},
+	routing.RegisterRoutes(routing.Route{
+		Path:    "/bild",
+		Handler: h.Get,
 	})
 
 	return h

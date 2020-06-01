@@ -23,11 +23,9 @@ func NewNewsTickerHandler(a *api.BildNewsTicker) *NewsTickerHandler {
 		api: a,
 	}
 
-	routing.RegisterRoutes([]routing.Route{
-		{
-			Path:    "/bild/news",
-			Handler: h.Get,
-		},
+	routing.RegisterRoutes(routing.Route{
+		Path:    "/bild/news",
+		Handler: h.Get,
 	})
 
 	return h

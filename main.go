@@ -16,11 +16,9 @@ func main() {
 	bildIndexHandler := handler.NewIndexHandler()
 
 	// Set the base route
-	routing.RegisterRoutes([]routing.Route{
-		{
-			Path:    "/",
-			Handler: bildIndexHandler.Get,
-		},
+	routing.RegisterRoutes(routing.Route{
+		Path:    "/",
+		Handler: bildIndexHandler.Get,
 	})
 
 	errors.UseMarkupErrors(errorTemplate)
