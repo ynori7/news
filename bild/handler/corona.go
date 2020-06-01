@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	"github.com/ynori7/lilypad/errors"
 	"github.com/ynori7/lilypad/handler"
 	"github.com/ynori7/lilypad/log"
 	"github.com/ynori7/lilypad/routing"
@@ -37,14 +38,14 @@ func (h *CoronaNewsHandler) Get(r *http.Request) handler.Response {
 	news, err := h.api.GetCoronaNews()
 	if err != nil {
 		logger.WithFields(log.Fields{"error": err}).Error("Error getting news")
-		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
+		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
 	// Render view
 	markup, err := view.RenderTemplate(templates.CoronaNewsTemplate, templates.CoronaNewsData{News: news})
 	if err != nil {
 		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
-		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
+		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
 	return handler.SuccessResponse(markup)

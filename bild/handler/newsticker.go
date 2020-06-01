@@ -3,9 +3,10 @@ package handler
 import (
 	"net/http"
 
+	"github.com/ynori7/lilypad/errors"
 	"github.com/ynori7/lilypad/handler"
-	"github.com/ynori7/lilypad/routing"
 	"github.com/ynori7/lilypad/log"
+	"github.com/ynori7/lilypad/routing"
 	"github.com/ynori7/lilypad/view"
 	"github.com/ynori7/news/bild/api"
 	"github.com/ynori7/news/bild/filter"
@@ -38,7 +39,7 @@ func (h *NewsTickerHandler) Get(r *http.Request) handler.Response {
 	news, err := h.api.GetNews()
 	if err != nil {
 		logger.WithFields(log.Fields{"error": err}).Error("Error getting news")
-		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
+		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
 	// Filter results
@@ -48,7 +49,7 @@ func (h *NewsTickerHandler) Get(r *http.Request) handler.Response {
 	markup, err := view.RenderTemplate(templates.NewsTickerTemplate, templates.NewsTickerData{News: news})
 	if err != nil {
 		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
-		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
+		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
 	return handler.SuccessResponse(markup)
