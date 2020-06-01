@@ -8,7 +8,6 @@ import (
 	"github.com/ynori7/lilypad/routing"
 	"github.com/ynori7/lilypad/view"
 	"github.com/ynori7/news/bild/api"
-	"github.com/ynori7/news/bild/model"
 	"github.com/ynori7/news/bild/templates"
 )
 
@@ -42,9 +41,7 @@ func (h *CoronaNewsHandler) Get(r *http.Request) handler.Response {
 	}
 
 	// Render view
-	markup, err := view.RenderTemplate(templates.CoronaNewsTemplate, struct {
-		News []model.NewsTickerItem
-	}{News: news})
+	markup, err := view.RenderTemplate(templates.CoronaNewsTemplate, templates.CoronaNewsData{News: news})
 	if err != nil {
 		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
 		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
