@@ -1,15 +1,15 @@
 package handler
 
 import (
-	"github.com/ynori7/news/bild/model"
 	"net/http"
 
-	"github.com/gorilla/mux"
-	"github.com/sirupsen/logrus"
+	"github.com/ynori7/lilypad/handler"
+	"github.com/ynori7/lilypad/log"
+	"github.com/ynori7/lilypad/routing"
+	"github.com/ynori7/lilypad/view"
 	"github.com/ynori7/news/bild/api"
+	"github.com/ynori7/news/bild/model"
 	"github.com/ynori7/news/bild/templates"
-	"github.com/ynori7/news/core/log"
-	"github.com/ynori7/news/core/view"
 )
 
 type CoronaNewsHandler struct {
@@ -17,37 +17,40 @@ type CoronaNewsHandler struct {
 }
 
 func NewCoronaNewsHandler(a *api.BildNewsTicker) *CoronaNewsHandler {
-	return &CoronaNewsHandler{
+	h := &CoronaNewsHandler{
 		api: a,
 	}
-}
 
-func (h *CoronaNewsHandler) AddRoutes(r *mux.Router) {
-	r.HandleFunc("/bild/corona", h.Get)
+	routing.RegisterRoutes([]routing.Route{
+		{
+			Path:    "/bild/corona",
+			Handler: h.Get,
+		},
+	})
+
+	return h
 }
 
 // Get fetches the HTML markup for the Bild Newsticker
-func (h *CoronaNewsHandler) Get(w http.ResponseWriter, r *http.Request) {
-	logger := log.WithRequest("CoronaNewsHandler.Get", r)
+func (h *CoronaNewsHandler) Get(r *http.Request) handler.Response {
+	logger := log.WithRequest(r).WithFields(log.Fields{"Logger": "CoronaNewsHandler.Get"})
 	logger.Info("Handling request")
 
+	// Fetch news
 	news, err := h.api.GetCoronaNews()
 	if err != nil {
-		logger.WithFields(logrus.Fields{"error": err}).Error("Error getting news")
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(ErrInternalError.Error()))
-		return
+		logger.WithFields(log.Fields{"error": err}).Error("Error getting news")
+		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
 	}
 
-	markup, err := view.ExecuteHtmlTemplate(templates.CoronaNewsTemplate, struct {
+	// Render view
+	markup, err := view.RenderTemplate(templates.CoronaNewsTemplate, struct {
 		News []model.NewsTickerItem
 	}{News: news})
 	if err != nil {
-		logger.WithFields(logrus.Fields{"error": err}).Error("Error rendering view")
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(ErrInternalError.Error()))
-		return
+		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
+		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
 	}
 
-	w.Write([]byte(markup))
+	return handler.SuccessResponse(markup)
 }

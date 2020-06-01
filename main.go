@@ -1,27 +1,39 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gorilla/mux"
-	log "github.com/sirupsen/logrus"
+	"github.com/ynori7/lilypad/errors"
+	"github.com/ynori7/lilypad/log"
+	"github.com/ynori7/lilypad/routing"
 	"github.com/ynori7/news/bild/api"
 	"github.com/ynori7/news/bild/handler"
-	_ "github.com/ynori7/news/core/log"
 )
 
 func main() {
-	r := mux.NewRouter()
-
 	// Bild
 	bildApi := api.NewBildNewsTicker()
-	handler.NewNewsTickerHandler(bildApi).AddRoutes(r)
-	handler.NewCoronaNewsHandler(bildApi).AddRoutes(r)
-
+	handler.NewNewsTickerHandler(bildApi)
+	handler.NewCoronaNewsHandler(bildApi)
 	bildIndexHandler := handler.NewIndexHandler()
-	bildIndexHandler.AddRoutes(r)
-	r.HandleFunc("/", bildIndexHandler.Get)
+
+	// Set the base route
+	routing.RegisterRoutes([]routing.Route{
+		{
+			Path:    "/",
+			Handler: bildIndexHandler.Get,
+		},
+	})
+
+	errors.UseMarkupErrors(errorTemplate)
 
 	log.Info("Starting service")
-	http.ListenAndServe(":8080", r)
+	routing.ServeHttp(":8080")
 }
+
+const errorTemplate = `<html>
+<head></head>
+<body>
+<h1>{{ .Status }}</h1>
+<p>{{ .Message }}</p>
+</body>
+</html>
+`

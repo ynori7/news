@@ -3,12 +3,12 @@ package handler
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
-	"github.com/sirupsen/logrus"
+	"github.com/ynori7/lilypad/handler"
+	"github.com/ynori7/lilypad/log"
+	"github.com/ynori7/lilypad/routing"
+	"github.com/ynori7/lilypad/view"
 	"github.com/ynori7/news/bild/api"
 	"github.com/ynori7/news/bild/templates"
-	"github.com/ynori7/news/core/log"
-	"github.com/ynori7/news/core/view"
 )
 
 type IndexHandler struct {
@@ -16,25 +16,29 @@ type IndexHandler struct {
 }
 
 func NewIndexHandler() *IndexHandler {
-	return &IndexHandler{}
-}
+	h := &IndexHandler{}
 
-func (h *IndexHandler) AddRoutes(r *mux.Router) {
-	r.HandleFunc("/bild", h.Get)
+	routing.RegisterRoutes([]routing.Route{
+		{
+			Path:    "/bild",
+			Handler: h.Get,
+		},
+	})
+
+	return h
 }
 
 // Get fetches the HTML markup for the Bild Newsticker
-func (h *IndexHandler) Get(w http.ResponseWriter, r *http.Request) {
-	logger := log.WithRequest("IndexHandler.Get", r)
+func (h *IndexHandler) Get(r *http.Request) handler.Response {
+	logger := log.WithRequest(r).WithFields(log.Fields{"Logger": "IndexHandler.Get"})
 	logger.Info("Handling request")
 
-	markup, err := view.ExecuteHtmlTemplate(templates.IndexTemplate, nil)
+	// Render view
+	markup, err := view.RenderTemplate(templates.IndexTemplate, nil)
 	if err != nil {
-		logger.WithFields(logrus.Fields{"error": err}).Error("Error rendering view")
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(ErrInternalError.Error()))
-		return
+		logger.WithFields(log.Fields{"error": err}).Error("Error rendering view")
+		return handler.ErrorResponse(http.StatusInternalServerError, ErrInternalError)
 	}
 
-	w.Write([]byte(markup))
+	return handler.SuccessResponse(markup)
 }
