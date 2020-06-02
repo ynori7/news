@@ -7,5 +7,5 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/sirupsen/logrus v1.6.0
 	github.com/stretchr/testify v1.6.0
-	github.com/ynori7/lilypad v0.0.0-20200601082619-74c4b8d0cd90
+	github.com/ynori7/lilypad v0.0.4
 )
