@@ -15,10 +15,6 @@ type Article struct {
 	BodyLines     []string
 }
 
-func (a Article) HtmlTitle() template.HTML {
-	return template.HTML(a.Title)
-}
-
 func (a Article) HtmlBody() template.HTML {
 	body := strings.Join(a.BodyLines, "\n")
 	return template.HTML(body)

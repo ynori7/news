@@ -24,14 +24,14 @@ const NewsArticleTemplate = `<html>
 			margin-bottom: 2rem;
 		}
 	</style>
-	<title>Bild News-Ticker</title>
-	<meta name="description" content="Bild News-Ticker ohne Fett" property="og:description">
+	<title>Bild News - {{ .Article.Title }}</title>
+	<meta name="description" content="Bild News - {{ br2space .Article.Title }}" property="og:description">
 </head>
 <body>
 <article>
 	<div class="back"><a href="/bild/news">Züruck</a></div>
 
-	<h1><a href="{{ .Article.OriginalLink }}" target="_blank">{{ .Article.HtmlTitle }}</a></h1>
+	<h1><a href="{{ .Article.OriginalLink }}" target="_blank">{{ br2space .Article.Title }}</a></h1>
 	
 	<div class="info">
 		{{ if .Article.Author }}<span class="author">Von {{ .Article.Author }}</span>{{ end }}

@@ -22,6 +22,8 @@ var (
 		"THÜRINGEN":              {},
 		"FRANKFURT":              {},
 		"NÜRNBERG":               {},
+		"DRESDEN":                {},
+		"SAARLAND":               {},
 
 		//Other
 		"TV":     {},

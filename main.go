@@ -4,8 +4,10 @@ import (
 	"github.com/ynori7/lilypad/errors"
 	"github.com/ynori7/lilypad/log"
 	"github.com/ynori7/lilypad/routing"
+	"github.com/ynori7/lilypad/view"
 	"github.com/ynori7/news/bild/api"
 	"github.com/ynori7/news/bild/handler"
+	"github.com/ynori7/news/core"
 )
 
 func main() {
@@ -22,17 +24,9 @@ func main() {
 		Handler: bildIndexHandler.Get,
 	})
 
-	errors.UseMarkupErrors(errorTemplate)
+	view.RegisterGlobalTemplateFuncs(core.CoreTemplateFuncs)
+	errors.UseMarkupErrors(core.ErrorTemplate)
 
 	log.Info("Starting service")
 	routing.ServeHttp(":8080")
 }
-
-const errorTemplate = `<html>
-<head></head>
-<body>
-<h1>{{ .Status }}</h1>
-<p>{{ .Message }}</p>
-</body>
-</html>
-`
