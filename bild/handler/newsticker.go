@@ -73,6 +73,9 @@ func (h *NewsTickerHandler) Corona(r *http.Request) handler.Response {
 		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
+	// Filter results
+	news = filter.FilterCoronaNewsItems(news)
+
 	// Render view
 	markup, err := view.RenderTemplate(templates.CoronaNewsTemplate, templates.CoronaNewsData{News: news})
 	if err != nil {

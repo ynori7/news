@@ -43,6 +43,27 @@ var (
 	}
 )
 
+func FilterCoronaNewsItems(news []model.NewsTickerItem) []model.NewsTickerItem {
+	final := make([]model.NewsTickerItem, 0)
+
+	for _, n := range news {
+		//filter junk like videos and clips
+		if n.Description == "" {
+			continue
+		}
+
+		if strings.HasPrefix(n.Title, "Grafik") ||
+			strings.HasPrefix(n.Title, "BILD-Grafik") ||
+			strings.HasPrefix(n.Title, "VIDEO") {
+			continue
+		}
+
+		final = append(final, n)
+	}
+
+	return final
+}
+
 func FilterNewsTickerItems(news []model.NewsTickerItem) []model.NewsTickerItem {
 	final := make([]model.NewsTickerItem, 0)
 
