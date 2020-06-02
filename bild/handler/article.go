@@ -34,7 +34,7 @@ func (h *NewsArticleHandler) Get(r *http.Request) handler.Response {
 	logger := log.WithRequest(r).WithFields(log.Fields{"Logger": "NewsArticleHandler.Get"})
 	logger.Info("Handling request")
 
-	id := routing.Vars(r)["id"]
+	id := routing.GetVar(r, "id")
 	if id == "" {
 		logger.Debug("Missing id from request")
 		return handler.ErrorResponse(errors.BadRequestError("missing article id from request"))
