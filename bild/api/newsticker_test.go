@@ -19,14 +19,16 @@ func Test_GetNewsTicker(t *testing.T) {
 	}))
 	defer server.Close()
 
-	newsClient := &BildNewsTicker{httpClient: server.Client(), newsTickerUrl: server.URL}
+	newsClient := NewBildNewsTicker()
+	newsClient.httpClient = server.Client()
+	newsClient.newsTickerUrl = server.URL
 
 	//when
 	news, err := newsClient.GetNews()
 
 	//then
 	require.NoError(t, err, "There was an error getting the premieres")
-	assert.Equal(t, 128, len(news), "There should have been the expected number of news items")
+	assert.Equal(t, 118, len(news), "There should have been the expected number of news items")
 }
 
 func Test_GetCoronaNews(t *testing.T) {
@@ -38,7 +40,9 @@ func Test_GetCoronaNews(t *testing.T) {
 	}))
 	defer server.Close()
 
-	newsClient := &BildNewsTicker{httpClient: server.Client(), coronaTickerUrl: server.URL}
+	newsClient := NewBildNewsTicker()
+	newsClient.httpClient = server.Client()
+	newsClient.newsTickerUrl = server.URL
 
 	//when
 	news, err := newsClient.GetCoronaNews()

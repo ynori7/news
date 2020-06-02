@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -13,12 +14,16 @@ const (
 	baseUrl         = "https://m.bild.de"
 	newsTickerUrl   = "https://m.bild.de/news/alle-news-home-home/nachricht/alle-meldungen-49391716.bildMobile.html"
 	coronaTickerUrl = "https://www.bild.de/news/inland/news-inland/coronavirus-live-ticker-70411946.bild.html"
+
+	getIdExpression = `^.*\-([0-9]+)\.bildMobile\.html$`
 )
 
 type BildNewsTicker struct {
 	httpClient      *http.Client
 	newsTickerUrl   string
 	coronaTickerUrl string
+
+	idMatcher *regexp.Regexp
 }
 
 func NewBildNewsTicker() *BildNewsTicker {
@@ -26,6 +31,7 @@ func NewBildNewsTicker() *BildNewsTicker {
 		httpClient:      &http.Client{},
 		newsTickerUrl:   newsTickerUrl,
 		coronaTickerUrl: coronaTickerUrl,
+		idMatcher: regexp.MustCompile(getIdExpression),
 	}
 }
 
@@ -56,6 +62,13 @@ func (b *BildNewsTicker) GetNews() ([]model.NewsTickerItem, error) {
 		infoNode := s.Find(".info")
 		newsItem.Date = infoNode.Find("time").AttrOr("datetime", "")
 		newsItem.Category = infoNode.Nodes[0].LastChild.Data
+
+		//extract the id from the url
+		matches := b.idMatcher.FindStringSubmatch(newsItem.Link)
+		if len(matches) != 2 {
+			return //something is wrong with this one. It's probably a video or some other content type
+		}
+		newsItem.Id = matches[1]
 
 		newsItems = append(newsItems, newsItem)
 	})

@@ -10,9 +10,10 @@ import (
 
 func main() {
 	// Bild
-	bildApi := api.NewBildNewsTicker()
-	handler.NewNewsTickerHandler(bildApi)
-	handler.NewCoronaNewsHandler(bildApi)
+	bildNewsTickerApi := api.NewBildNewsTicker()
+	bildArticleApi := api.NewBildArticleApi()
+	handler.NewNewsTickerHandler(bildNewsTickerApi)
+	handler.NewNewsArticleHandler(bildArticleApi)
 	bildIndexHandler := handler.NewIndexHandler()
 
 	// Set the base route

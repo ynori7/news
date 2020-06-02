@@ -36,7 +36,7 @@ const NewsTickerTemplate = `<html>
 
 	{{ range $i, $val := .News }}
 	<div class="news-item">
-		<h3><a href="{{ $val.Link }}" target="_blank">{{ $val.Title }}</a></h3>
+		<h3><a href="/bild/news/{{ $val.Id }}" target="_blank">{{ $val.Title }}</a></h3>
 		<div class="info">
 			<span class="date">{{ $val.Date }}</span>
 			<span class="category">{{ $val.Category }}</span>

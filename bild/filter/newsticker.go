@@ -50,6 +50,11 @@ func FilterNewsTickerItems(news []model.NewsTickerItem) []model.NewsTickerItem {
 			continue
 		}
 
+		//filter out junk like "bild plus"
+		if !isNormalNewsArticle(n.Link) {
+			continue
+		}
+
 		//filter categories
 		if isInterestingCategory(n.Category) {
 			final = append(final, n)
@@ -57,6 +62,13 @@ func FilterNewsTickerItems(news []model.NewsTickerItem) []model.NewsTickerItem {
 	}
 
 	return final
+}
+
+func isNormalNewsArticle(link string) bool {
+	if strings.Contains(link, "/bild-plus") {
+		return false
+	}
+	return true
 }
 
 func isInterestingCategory(category string) bool {

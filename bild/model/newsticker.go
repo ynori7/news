@@ -1,6 +1,7 @@
 package model
 
 type NewsTickerItem struct {
+	Id          string
 	Title       string
 	Description string
 	Date        string
