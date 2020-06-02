@@ -24,7 +24,7 @@ const NewsArticleTemplate = `<html>
 			margin-bottom: 2rem;
 		}
 	</style>
-	<title>Bild News - {{ .Article.Title }}</title>
+	<title>Bild News - {{ br2space .Article.Title }}</title>
 	<meta name="description" content="Bild News - {{ br2space .Article.Title }}" property="og:description">
 </head>
 <body>
