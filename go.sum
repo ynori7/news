@@ -16,12 +16,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.6.0 h1:jlIyCplCJFULU/01vCkhKuTyc3OorI3bJFuw6obfgho=
 github.com/stretchr/testify v1.6.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/ynori7/lilypad v0.1.1 h1:MzE5q5XqAqDEqnjD0ps1wIzGHBVW35TDwkp4AFoUEiE=
-github.com/ynori7/lilypad v0.1.1/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
-github.com/ynori7/lilypad v0.1.2 h1:Gi1KUuvNKBPIjy62NruY2Ws3U4Y7LRnGAf2GuUc3nUY=
-github.com/ynori7/lilypad v0.1.2/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
-github.com/ynori7/lilypad v0.1.3 h1:UvJyHngGScLZPKyWTWZdGgITtC2Hw1S07Vj3OBXyrRg=
-github.com/ynori7/lilypad v0.1.3/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
+github.com/ynori7/lilypad v0.1.4 h1:kYmMOXcQdtfWltMHP8u+FIS5qNnUkamJaLJ5B2iwVVY=
+github.com/ynori7/lilypad v0.1.4/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/net v0.0.0-20180218175443-cbe0f9307d01/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/net v0.0.0-20200202094626-16171245cfb2 h1:CCH4IOTTfewWjGOlSp+zGcjutRKlBEZQ6wTn8ozI/nI=
