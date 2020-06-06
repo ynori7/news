@@ -58,7 +58,7 @@ func (h *NewsTickerHandler) Get(r *http.Request) handler.Response {
 		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
-	return handler.SuccessResponse(markup)
+	return handler.SuccessResponse(markup).WithMaxAge(300)
 }
 
 // Get fetches the HTML markup for the Bild Corona Newsticker
@@ -83,5 +83,5 @@ func (h *NewsTickerHandler) Corona(r *http.Request) handler.Response {
 		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
-	return handler.SuccessResponse(markup)
+	return handler.SuccessResponse(markup).WithMaxAge(300)
 }

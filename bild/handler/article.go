@@ -54,5 +54,5 @@ func (h *NewsArticleHandler) Get(r *http.Request) handler.Response {
 		return handler.ErrorResponse(errors.InternalServerError("error getting news"))
 	}
 
-	return handler.SuccessResponse(markup)
+	return handler.SuccessResponse(markup).WithMaxAge(3600)
 }
