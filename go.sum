@@ -18,6 +18,10 @@ github.com/stretchr/testify v1.6.0 h1:jlIyCplCJFULU/01vCkhKuTyc3OorI3bJFuw6obfgh
 github.com/stretchr/testify v1.6.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/ynori7/lilypad v0.1.4 h1:kYmMOXcQdtfWltMHP8u+FIS5qNnUkamJaLJ5B2iwVVY=
 github.com/ynori7/lilypad v0.1.4/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
+github.com/ynori7/lilypad v0.2.0 h1:tDzu7yFXLM/4yIPHIEIYwyxYePu9zY/S9tOY6JgvYac=
+github.com/ynori7/lilypad v0.2.0/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
+github.com/ynori7/lilypad v0.3.0 h1:NADOxlXqQ4kjmtmGbCnl5Sd2aTEs6OCijpkgdMrA34g=
+github.com/ynori7/lilypad v0.3.0/go.mod h1:jToGQCoMuBMuI7EjlOSMvYvbNMZjvv/WdPYeYVqSpsQ=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/net v0.0.0-20180218175443-cbe0f9307d01/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/net v0.0.0-20200202094626-16171245cfb2 h1:CCH4IOTTfewWjGOlSp+zGcjutRKlBEZQ6wTn8ozI/nI=

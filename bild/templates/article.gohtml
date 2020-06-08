@@ -1,0 +1,19 @@
+{{ define "title"}}Bild News - {{ br2space .Article.Title }}{{end}}
+{{ define "description"}}Bild News - {{ br2space .Article.Title }}{{end}}
+
+{{ define "body" }}
+<article>
+    <div class="back"><a href="/bild/news">Züruck</a></div>
+
+    <h1><a href="{{ .Article.OriginalLink }}" target="_blank">{{ br2space .Article.Title }}</a></h1>
+
+    <div class="info">
+        {{ if .Article.Author }}<span class="author">Von {{ .Article.Author }}</span>{{ end }}
+        <span class="date">{{ .Article.DatePublished }}</span>
+    </div>
+
+    <div class="body">
+        {{ .Article.HtmlBody }}
+    </div>
+</article>
+{{ end }}

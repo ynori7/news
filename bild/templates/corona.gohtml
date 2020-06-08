@@ -1,0 +1,23 @@
+{{ define "title"}}Bild Corona-Ticker{{end}}
+{{ define "description"}}Bild Corona News-Ticker ohne Fett{{end}}
+
+{{ define "body" }}
+<section class="news">
+    <h1>Corona Nachrichten</h1>
+
+    <div class="back"><a href="/bild">Züruck</a></div>
+
+    {{ range $i, $val := .News }}
+        <div class="news-item">
+            <h3>{{ $val.Title }}</h3>
+            <div class="info">
+                <span class="date">{{ $val.Date }}</span>
+            </div>
+            <div class="description"><p>{{ $val.Description }}</p></div>
+        </div>
+        <hr />
+    {{ end }}
+</section>
+</body>
+</html>
+{{ end }}

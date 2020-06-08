@@ -1,0 +1,9 @@
+{{ define "title"}}{{ .Status }} Error{{end}}
+{{ define "description"}}{{ .Message }}{{end}}
+
+{{ define "body" }}
+<h1>{{ .Status }}</h1>
+<p>{{ .Message }}</p>
+{{ end }}
+
+{{ define "styles" }}<style></style>{{ end }}
