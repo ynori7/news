@@ -60,6 +60,9 @@ func (b *BildNewsTicker) GetNews() ([]model.NewsTickerItem, error) {
 		newsItem.Description = strings.TrimSpace(s.Find(".entry-content").First().Text())
 
 		infoNode := s.Find(".info")
+		if len(infoNode.Nodes) == 0 {
+			return //there's something wrong with this one
+		}
 		newsItem.Date = infoNode.Find("time").AttrOr("datetime", "")
 		newsItem.Category = infoNode.Nodes[0].LastChild.Data
 
