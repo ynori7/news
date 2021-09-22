@@ -36,17 +36,34 @@ func (b *BildArticleApi) GetNewsArticle(articleId string) (*model.Article, error
 	}
 
 	articleRoot := doc.Find("article").First()
+	var articleBody *goquery.Selection
+
 	rawTitle, err := articleRoot.Find("#cover .headline").First().Html()
 	if err != nil {
 		return nil, err
 	}
-	newsArticle.Title = rawTitle
+	if rawTitle != "" {
+		newsArticle.Title = rawTitle
 
-	authorData := articleRoot.Find(".authors").First()
-	newsArticle.Author = authorData.Find(".authors__name").First().Text()
-	newsArticle.DatePublished = authorData.Find(".authors__pubdate").First().AttrOr("datetime", "")
+		authorData := articleRoot.Find(".authors").First()
+		newsArticle.Author = authorData.Find(".authors__name").First().Text()
+		newsArticle.DatePublished = authorData.Find(".authors__pubdate").First().AttrOr("datetime", "")
 
-	articleBody := articleRoot.Find(".txt").First()
+		articleBody = articleRoot.Find(".txt").First()
+	} else {
+		rawTitle, err := articleRoot.Find(".article-header__headline").First().Html()
+		if err != nil {
+			return nil, err
+		}
+		newsArticle.Title = rawTitle
+
+		authorData := articleRoot.Find(".author").First()
+		newsArticle.Author = authorData.Find(".author__name").First().Text()
+		newsArticle.DatePublished = articleRoot.Find(".datetime--article").First().AttrOr("datetime", "")
+
+		articleBody = articleRoot.Find(".article-body").First()
+	}
+
 	articleBody.Children().Each(func(i int, s *goquery.Selection) {
 		if s.Is("p") {
 			h, err := s.Html()
